@@ -1,3 +1,3 @@
-USE sql_store;
+USE smartlab;
 
-SELECT* FROM customers WHERE customer_id = 6
+SELECT* FROM materiais WHERE familia = 'solda' AND categoria = 'ferramenta'

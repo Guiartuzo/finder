@@ -1,25 +1,23 @@
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import Error   
 
-def getProductPrice(id):
+def getMaterial(idtest,id):
 
     try:
         connection = mysql.connector.connect(host='localhost',
-                                            database='sql_inventory',
+                                            database='smartlab',
                                             user='root',
                                             password='adminadmin123')
 
-        cursor = connection.cursor()
-        sql_select_Query = """SELECT * FROM products WHERE product_id = %s"""
-        cursor.execute(sql_select_Query,(id,))
+        cursor = connection.cursor(buffered=True)
+        sql_select_Query = """SELECT * FROM materiais WHERE %s = %s ORDER BY id_material"""
+        cursor.execute(sql_select_Query,(idtest,id))
         records = cursor.fetchall()
 
-        print("\nPrinting price...d")
+        print("\nFetching itens...")
         for row in records:
-            #print("Id = ", row[0], )
-            #print("Name = ", row[1])
-            #print("quantity in stock  = ", row[2])
-            print("The selected product price is =  ", row[3], "\n")
+            print("The selected product name is =  ", row[3], "\n")
+            print("Quantity = ", row[4], "\n")
 
     except Error as e:
         print("Error reading data from MySQL table", e)
@@ -29,5 +27,6 @@ def getProductPrice(id):
             cursor.close()
             print("MySQL connection is closed")
 
-id1 = 2
-getProductPrice(id1)
+id1 = "familia"
+id2 = "solda"
+getMaterial(id1,id2)
